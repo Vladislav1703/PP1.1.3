@@ -11,11 +11,13 @@ public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() {
 
     }
-    Connection connection;
+    Connection connection = null;
     @Override
     public void createUsersTable() {
         try {
-            connection = Util.getConnection();
+            if (connection == null || connection.isClosed()) {
+                connection = Util.getConnection();
+            }
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users " +
                     "(id BIGINT PRIMARY KEY AUTO_INCREMENT, " +
@@ -44,7 +46,9 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void dropUsersTable() {
         try {
-            connection = Util.getConnection();
+            if (connection == null || connection.isClosed()) {
+                connection = Util.getConnection();
+            }
             connection.setAutoCommit(false);
             PreparedStatement statement = connection.prepareStatement("DROP TABLE IF EXISTS users");
             statement.executeUpdate();
@@ -69,7 +73,9 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void saveUser(String name, String lastName, byte age) {
         try {
-            connection = Util.getConnection();
+            if (connection == null || connection.isClosed()) {
+                connection = Util.getConnection();
+            }
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement =
                     connection.prepareStatement("INSERT INTO users (name, lastname, age) VALUES(?, ?, ?)");
@@ -99,7 +105,9 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void removeUserById(long id) {
         try {
-            connection = Util.getConnection();
+            if (connection == null || connection.isClosed()) {
+                connection = Util.getConnection();
+            }
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users WHERE id=?");
             preparedStatement.setLong(1, id);
@@ -128,7 +136,9 @@ public class UserDaoJDBCImpl implements UserDao {
         User user = null;
         ResultSet rs = null;
         try {
-            connection = Util.getConnection();
+            if (connection == null || connection.isClosed()) {
+                connection = Util.getConnection();
+            }
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users");
             rs = preparedStatement.executeQuery();
@@ -164,7 +174,9 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void cleanUsersTable() {
         try {
-            connection = Util.getConnection();
+            if (connection == null || connection.isClosed()) {
+                connection = Util.getConnection();
+            }
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement = connection.prepareStatement("TRUNCATE TABLE users");
             preparedStatement.executeUpdate();
