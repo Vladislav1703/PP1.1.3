@@ -11,11 +11,11 @@ public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() {
 
     }
-    Connection connection = null;
+    Connection connection = Util.getConnection();
     @Override
     public void createUsersTable() {
         try {
-            if (connection == null || connection.isClosed()) {
+            if (connection.isClosed()) {
                 connection = Util.getConnection();
             }
             connection.setAutoCommit(false);
@@ -46,7 +46,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void dropUsersTable() {
         try {
-            if (connection == null || connection.isClosed()) {
+            if (connection.isClosed()) {
                 connection = Util.getConnection();
             }
             connection.setAutoCommit(false);
@@ -73,7 +73,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void saveUser(String name, String lastName, byte age) {
         try {
-            if (connection == null || connection.isClosed()) {
+            if (connection.isClosed()) {
                 connection = Util.getConnection();
             }
             connection.setAutoCommit(false);
@@ -105,7 +105,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void removeUserById(long id) {
         try {
-            if (connection == null || connection.isClosed()) {
+            if (connection.isClosed()) {
                 connection = Util.getConnection();
             }
             connection.setAutoCommit(false);
@@ -136,7 +136,7 @@ public class UserDaoJDBCImpl implements UserDao {
         User user = null;
         ResultSet rs = null;
         try {
-            if (connection == null || connection.isClosed()) {
+            if (connection.isClosed()) {
                 connection = Util.getConnection();
             }
             connection.setAutoCommit(false);
@@ -174,7 +174,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void cleanUsersTable() {
         try {
-            if (connection == null || connection.isClosed()) {
+            if (connection.isClosed()) {
                 connection = Util.getConnection();
             }
             connection.setAutoCommit(false);
